@@ -221,7 +221,7 @@ async function exportCSV() {
 
 document.getElementById("export-csv")?.addEventListener("click", exportCSV);
 
-    if (window.location.pathname.includes("match.html")) {
+    if (window.location.pathname.includes("index.html")) {
         document.getElementById("pause-game")?.addEventListener("click", pauseAll);
         document.getElementById("reset-all")?.addEventListener("click", resetAll);
         document.getElementById("start-possession-a")?.addEventListener("click", startPossessionA);
@@ -229,7 +229,6 @@ document.getElementById("export-csv")?.addEventListener("click", exportCSV);
     }
 
 import { auth } from "./firebase";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 // Ejemplo de uso de Firebase en match.html
 console.log("Firebase auth importado correctamente:", auth);

@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import path from "path";
+import { mainModule } from "process";
 
 export default defineConfig({
   root: ".", 
@@ -8,8 +9,9 @@ export default defineConfig({
     emptyOutDir: true, // Limpia la carpeta "dist" antes de cada build
     rollupOptions: {
       input: {
-        match: path.resolve(__dirname, "index.html"),
+        main: path.resolve(__dirname, "index.html"),
       }
+      
     }
   },
   server: {

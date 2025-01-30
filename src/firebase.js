@@ -4,12 +4,12 @@ import { getAuth } from "firebase/auth";
 
 // Configuración del proyecto Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyC1iOjvZxwW6nlOqzFdLEtFgZbuu8XYJbI",
-  authDomain: "futbol7-af5c8.firebaseapp.com",
-  projectId: "futbol7-af5c8",
-  storageBucket: "futbol7-af5c8.firebasestorage.app",
-  messagingSenderId: "981838542086",
-  appId: "1:981838542086:web:ae6b9a66dcb192b918da87",
+    apiKey: "AIzaSyB2j1SdhX_4bPFQJPQxgKZocE2cptashXo",
+  authDomain: "registro-partido.firebaseapp.com",
+  projectId: "registro-partido",
+  storageBucket: "registro-partido.firebasestorage.app",
+  messagingSenderId: "286507654061",
+  appId: "1:286507654061:web:8e3098ec691b41a0295f24",
 };
 
 // Inicializa Firebase
