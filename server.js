@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 
 // Habilitar CORS para permitir solicitudes desde localhost y otros orígenes
 app.use(cors({
-    origin: ["http://localhost:3000", "https://futbol7.onrender.com"],
+    origin: ["http://localhost:3000", "https://registro-partido.onrender.com"],
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"]
 }));
