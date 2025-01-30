@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "description": "",
+  "engines": {
+    "node": "22.x",
+    "npm": "10.x"
+  },
+  "scripts": {
+    "start": "node dist/server.js",
+    "build": "npx vite build && copy server.js dist\\server.js",
+    "dev": "npx vite",
+    "preview": "npx vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "firebase": "^11.2.0",
+    "json2csv": "^6.0.0-alpha.2",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "vite": "^4.5.0"
+  }
+}
