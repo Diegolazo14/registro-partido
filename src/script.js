@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM completamente cargado y listo.");
     // Variables de estadísticas
 let stats = {
     teamA: { goals: 0, passes: 0, shots: 0, possession: 0, shotsTimes: [], goalsTimes: [] },
@@ -145,46 +146,23 @@ function pausePossessionB() {
     possessionIntervalB = null;
 }
 
-// Eventos para goles, pases y tiros
-document.getElementById("goalA")?.addEventListener("click", () => {
-    stats.teamA.goals++;
-    stats.teamA.goalsTimes.push(formatTime(timerSeconds)); // Guardar el tiempo
-    updateStats();
-    console.log(`Gol Equipo Azul: ${stats.teamA.goals}`);
-});
+/// Eventos para goles, pases y tiros
+function verificarBoton(id, callback) {
+    const boton = document.getElementById(id);
+    if (boton) {
+        console.log(`✅ Botón encontrado: ${id}`);
+        boton.addEventListener("click", callback);
+    } else {
+        console.error(`❌ Botón NO encontrado: ${id}`);
+    }
+}
 
-document.getElementById("goalB")?.addEventListener("click", () => {
-    stats.teamB.goals++;
-    stats.teamB.goalsTimes.push(formatTime(timerSeconds)); // Guardar el tiempo
-    updateStats();
-    console.log(`Gol Equipo Rojo: ${stats.teamB.goals}`);
-});
-
-document.getElementById("passA")?.addEventListener("click", () => {
-    stats.teamA.passes++;
-    updateStats();
-    console.log(`Pase Equipo Azul: ${stats.teamA.passes}`);
-});
-
-document.getElementById("passB")?.addEventListener("click", () => {
-    stats.teamB.passes++;
-    updateStats();
-    console.log(`Pase Equipo Rojo: ${stats.teamB.passes}`);
-});
-
-document.getElementById("shotA")?.addEventListener("click", () => {
-    stats.teamA.shots++;
-    stats.teamA.shotsTimes.push(formatTime(timerSeconds)); // Guardar el tiempo
-    updateStats();
-    console.log(`Tiro Equipo Azul: ${stats.teamA.shots}`);
-});
-
-document.getElementById("shotB")?.addEventListener("click", () => {
-    stats.teamB.shots++;
-    stats.teamB.shotsTimes.push(formatTime(timerSeconds)); // Guardar el tiempo
-    updateStats();
-    console.log(`Tiro Equipo Rojo: ${stats.teamB.shots}`);
-});
+verificarBoton("goalA", () => { stats.teamA.goals++; updateStats(); });
+verificarBoton("goalB", () => { stats.teamB.goals++; updateStats(); });
+verificarBoton("passA", () => { stats.teamA.passes++; updateStats(); });
+verificarBoton("passB", () => { stats.teamB.passes++; updateStats(); });
+verificarBoton("shotA", () => { stats.teamA.shots++; updateStats(); });
+verificarBoton("shotB", () => { stats.teamB.shots++; updateStats(); });
 
 // Exportar estadísticas a CSV
 async function exportCSV() {
