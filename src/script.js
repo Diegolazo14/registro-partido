@@ -1,4 +1,5 @@
-// Variables de estadísticas
+document.addEventListener("DOMContentLoaded", () => {
+    // Variables de estadísticas
 let stats = {
     teamA: { goals: 0, passes: 0, shots: 0, possession: 0, shotsTimes: [], goalsTimes: [] },
     teamB: { goals: 0, passes: 0, shots: 0, possession: 0, shotsTimes: [], goalsTimes: [] }
@@ -227,9 +228,9 @@ document.getElementById("export-csv")?.addEventListener("click", exportCSV);
         document.getElementById("start-possession-a")?.addEventListener("click", startPossessionA);
         document.getElementById("start-possession-b")?.addEventListener("click", startPossessionB);
     }
+    });
 
 import { auth } from "./firebase";
 
 // Ejemplo de uso de Firebase en match.html
 console.log("Firebase auth importado correctamente:", auth);
-
