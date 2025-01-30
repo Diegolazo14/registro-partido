@@ -190,7 +190,7 @@ async function exportCSV() {
     try {
         const baseUrl = window.location.hostname.includes("localhost")
         ? "http://localhost:3000/export-csv"
-        : "https://futbol7.onrender.com/export-csv";
+        : "https://registro-partido.onrender.com/export-csv";
 
         const response = await fetch(baseUrl, {
             method: "POST",
@@ -221,56 +221,12 @@ async function exportCSV() {
 
 document.getElementById("export-csv")?.addEventListener("click", exportCSV);
 
-// Navegación y eventos principales
-document.addEventListener("DOMContentLoaded", () => {
-    if (window.location.pathname.includes("index.html")) {
-        const registerBtn = document.getElementById("register-btn");
-        const loginBtn = document.getElementById("login-btn");
-        const registerMatchBtn = document.getElementById("register-match-btn");
-
-        if (registerBtn) {
-            registerBtn.addEventListener("click", () => {
-                document.getElementById("content").innerHTML = `
-                    <h2>Registro</h2>
-                    <form id="register-form">
-                        <input type="email" id="register-email" placeholder="Correo electrónico" required />
-                        <input type="password" id="register-password" placeholder="Contraseña" required />
-                        <button type="submit">Registrarse</button>
-                    </form>
-                `;
-                console.log("Formulario de registro cargado.");
-            });
-        }
-
-        if (loginBtn) {
-            loginBtn.addEventListener("click", () => {
-                document.getElementById("content").innerHTML = `
-                    <h2>Iniciar sesión</h2>
-                    <form id="login-form">
-                        <input type="email" id="login-email" placeholder="Correo electrónico" required />
-                        <input type="password" id="login-password" placeholder="Contraseña" required />
-                        <button type="submit">Iniciar sesión</button>
-                    </form>
-                `;
-                console.log("Formulario de inicio de sesión cargado.");
-            });
-        }
-
-        if (registerMatchBtn) {
-            registerMatchBtn.addEventListener("click", () => {
-                window.location.href = "match.html";
-                console.log("Redirigiendo a match.html...");
-            });
-        }
-    }
-
     if (window.location.pathname.includes("match.html")) {
         document.getElementById("pause-game")?.addEventListener("click", pauseAll);
         document.getElementById("reset-all")?.addEventListener("click", resetAll);
         document.getElementById("start-possession-a")?.addEventListener("click", startPossessionA);
         document.getElementById("start-possession-b")?.addEventListener("click", startPossessionB);
     }
-});
 
 import { auth } from "./firebase";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
