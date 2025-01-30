@@ -172,8 +172,12 @@ document.getElementById("passA")?.addEventListener("click", () => stats.teamA.pa
 document.getElementById("passB")?.addEventListener("click", () => stats.teamB.passes++);
 document.getElementById("shotA")?.addEventListener("click", () => stats.teamA.shots++);
 document.getElementById("shotB")?.addEventListener("click", () => stats.teamB.shots++);
+document.getElementById("pause-game")?.addEventListener("click", pauseAll);
+document.getElementById("reset-all")?.addEventListener("click", resetAll);
+document.getElementById("start-possession-a")?.addEventListener("click", startPossessionA);
+document.getElementById("start-possession-b")?.addEventListener("click", startPossessionB);
 updateStats();
-
+});
 
 // Exportar estadísticas a CSV
 async function exportCSV() {
@@ -213,16 +217,10 @@ document.getElementById("export-csv")?.addEventListener("click", exportCSV);
 
 function exportCSV() {
     console.log("Exportando datos...");
+
+// Ejemplo de uso de Firebase en index.html
+console.log("Firebase auth importado correctamente:", auth);
+
 }
-    if (window.location.pathname.includes("index.html")) {
-        document.getElementById("pause-game")?.addEventListener("click", pauseAll);
-        document.getElementById("reset-all")?.addEventListener("click", resetAll);
-        document.getElementById("start-possession-a")?.addEventListener("click", startPossessionA);
-        document.getElementById("start-possession-b")?.addEventListener("click", startPossessionB);
-    }
-    });
 
 import { auth } from "./firebase";
-
-// Ejemplo de uso de Firebase en match.html
-console.log("Firebase auth importado correctamente:", auth);
