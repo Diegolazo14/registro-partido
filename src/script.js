@@ -1,25 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("DOM completamente cargado y listo.");
-    
-    // Verificación de botones en consola
-        const buttons = [
-            "goalA", "goalB",
-            "passA", "passB",
-            "shotA", "shotB",
-            "pause-game", "reset-all",
-            "start-possession-a", "start-possession-b"
-        ];
-    
-        buttons.forEach(id => {
-            const button = document.getElementById(id);
-            if (button) {
-                console.log(`✅ Botón encontrado: ${id}`);
-            } else {
-                console.error(`❌ Botón NO encontrado: ${id}`);
-            }
-        });
-
-    // Variables de estadísticas
+// Variables de estadísticas
 let stats = {
     teamA: { goals: 0, passes: 0, shots: 0, possession: 0, shotsTimes: [], goalsTimes: [] },
     teamB: { goals: 0, passes: 0, shots: 0, possession: 0, shotsTimes: [], goalsTimes: [] }
@@ -165,37 +144,58 @@ function pausePossessionB() {
     possessionIntervalB = null;
 }
 
-/// Eventos para goles, pases y tiros
-document.getElementById("goalA")?.addEventListener("click", () => stats.teamA.goals++);
-document.getElementById("goalB")?.addEventListener("click", () => stats.teamB.goals++);
-document.getElementById("passA")?.addEventListener("click", () => stats.teamA.passes++);
-document.getElementById("passB")?.addEventListener("click", () => stats.teamB.passes++);
-document.getElementById("shotA")?.addEventListener("click", () => stats.teamA.shots++);
-document.getElementById("shotB")?.addEventListener("click", () => stats.teamB.shots++);
-document.getElementById("pause-game")?.addEventListener("click", pauseAll);
-document.getElementById("reset-all")?.addEventListener("click", resetAll);
-document.getElementById("start-possession-a")?.addEventListener("click", startPossessionA);
-document.getElementById("start-possession-b")?.addEventListener("click", startPossessionB);
-updateStats();
+// Eventos para goles, pases y tiros
+document.getElementById("goalA")?.addEventListener("click", () => {
+    stats.teamA.goals++;
+    stats.teamA.goalsTimes.push(formatTime(timerSeconds)); // Guardar el tiempo
+    updateStats();
+    console.log(`Gol Equipo Azul: ${stats.teamA.goals}`);
+});
+
+document.getElementById("goalB")?.addEventListener("click", () => {
+    stats.teamB.goals++;
+    stats.teamB.goalsTimes.push(formatTime(timerSeconds)); // Guardar el tiempo
+    updateStats();
+    console.log(`Gol Equipo Rojo: ${stats.teamB.goals}`);
+});
+
+document.getElementById("passA")?.addEventListener("click", () => {
+    stats.teamA.passes++;
+    updateStats();
+    console.log(`Pase Equipo Azul: ${stats.teamA.passes}`);
+});
+
+document.getElementById("passB")?.addEventListener("click", () => {
+    stats.teamB.passes++;
+    updateStats();
+    console.log(`Pase Equipo Rojo: ${stats.teamB.passes}`);
+});
+
+document.getElementById("shotA")?.addEventListener("click", () => {
+    stats.teamA.shots++;
+    stats.teamA.shotsTimes.push(formatTime(timerSeconds)); // Guardar el tiempo
+    updateStats();
+    console.log(`Tiro Equipo Azul: ${stats.teamA.shots}`);
+});
+
+document.getElementById("shotB")?.addEventListener("click", () => {
+    stats.teamB.shots++;
+    stats.teamB.shotsTimes.push(formatTime(timerSeconds)); // Guardar el tiempo
+    updateStats();
+    console.log(`Tiro Equipo Rojo: ${stats.teamB.shots}`);
 });
 
 // Exportar estadísticas a CSV
 async function exportCSV() {
     try {
-        const baseUrl = window.location.hostname.includes("localhost")
-        ? "http://localhost:3000/export-csv"
-        : "https://registro-partido.onrender.com/export-csv";
-
-        const response = await fetch(baseUrl, {
+        const response = await fetch("https://futbol7.onrender.com/export-csv", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ stats }),
-            mode: "cors"
+            body: JSON.stringify({ stats })
         });
 
-        if (!response.ok) {
-            throw new Error(`Error al exportar los datos. Código: ${response.status}`);
-        }
+        if (!response.ok) throw new Error("Error al exportar los datos.");
+
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
@@ -215,12 +215,60 @@ async function exportCSV() {
 
 document.getElementById("export-csv")?.addEventListener("click", exportCSV);
 
-function exportCSV() {
-    console.log("Exportando datos...");
+// Navegación y eventos principales
+document.addEventListener("DOMContentLoaded", () => {
+    if (window.location.pathname.includes("index.html")) {
+        const registerBtn = document.getElementById("register-btn");
+        const loginBtn = document.getElementById("login-btn");
+        const registerMatchBtn = document.getElementById("register-match-btn");
 
-// Ejemplo de uso de Firebase en index.html
-console.log("Firebase auth importado correctamente:", auth);
+        if (registerBtn) {
+            registerBtn.addEventListener("click", () => {
+                document.getElementById("content").innerHTML = `
+                    <h2>Registro</h2>
+                    <form id="register-form">
+                        <input type="email" id="register-email" placeholder="Correo electrónico" required />
+                        <input type="password" id="register-password" placeholder="Contraseña" required />
+                        <button type="submit">Registrarse</button>
+                    </form>
+                `;
+                console.log("Formulario de registro cargado.");
+            });
+        }
 
-}
+        if (loginBtn) {
+            loginBtn.addEventListener("click", () => {
+                document.getElementById("content").innerHTML = `
+                    <h2>Iniciar sesión</h2>
+                    <form id="login-form">
+                        <input type="email" id="login-email" placeholder="Correo electrónico" required />
+                        <input type="password" id="login-password" placeholder="Contraseña" required />
+                        <button type="submit">Iniciar sesión</button>
+                    </form>
+                `;
+                console.log("Formulario de inicio de sesión cargado.");
+            });
+        }
+
+        if (registerMatchBtn) {
+            registerMatchBtn.addEventListener("click", () => {
+                window.location.href = "match.html";
+                console.log("Redirigiendo a match.html...");
+            });
+        }
+    }
+
+    if (window.location.pathname.includes("match.html")) {
+        document.getElementById("pause-game")?.addEventListener("click", pauseAll);
+        document.getElementById("reset-all")?.addEventListener("click", resetAll);
+        document.getElementById("start-possession-a")?.addEventListener("click", startPossessionA);
+        document.getElementById("start-possession-b")?.addEventListener("click", startPossessionB);
+    }
+});
 
 import { auth } from "./firebase";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+
+// Ejemplo de uso de Firebase en match.html
+console.log("Firebase auth importado correctamente:", auth);
+
