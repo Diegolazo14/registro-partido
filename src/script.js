@@ -188,7 +188,7 @@ document.getElementById("shotB")?.addEventListener("click", () => {
 // Exportar estadísticas a CSV
 async function exportCSV() {
     try {
-        const response = await fetch("https://futbol7.onrender.com/export-csv", {
+        const response = await fetch("https://registro-partido.com/export-csv", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ stats })
@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    if (window.location.pathname.includes("match.html")) {
+    if (window.location.pathname.includes("/")) {
         document.getElementById("pause-game")?.addEventListener("click", pauseAll);
         document.getElementById("reset-all")?.addEventListener("click", resetAll);
         document.getElementById("start-possession-a")?.addEventListener("click", startPossessionA);
@@ -267,8 +267,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 import { auth } from "./firebase";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-
 // Ejemplo de uso de Firebase en match.html
 console.log("Firebase auth importado correctamente:", auth);
 
