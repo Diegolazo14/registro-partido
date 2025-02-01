@@ -201,17 +201,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const csvData = {
             teamA: {
                 goals: stats.teamA.goals,
-                goalsTimes: stats.teamA.goalsTimes.join(", "), // Convertir lista en string
+                goalsTimes: stats.teamA.goalsTimes.join(" / "), // Convertir lista en string
                 shots: stats.teamA.shots,
-                shotsTimes: stats.teamA.shotsTimes.join(", "), // Convertir lista en string
+                shotsTimes: stats.teamA.shotsTimes.join(" / "), // Convertir lista en string
                 passes: stats.teamA.passes,
                 possession: stats.teamA.possession
             },
             teamB: {
                 goals: stats.teamB.goals,
-                goalsTimes: stats.teamB.goalsTimes.join(", "),
+                goalsTimes: stats.teamB.goalsTimes.join(" / "),
                 shots: stats.teamB.shots,
-                shotsTimes: stats.teamB.shotsTimes.join(", "),
+                shotsTimes: stats.teamB.shotsTimes.join(" / "),
                 passes: stats.teamB.passes,
                 possession: stats.teamB.possession
             }
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch(baseUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ stats }),
+                body: JSON.stringify({ stats: csvData }),
                 mode: "cors"
             });
 
