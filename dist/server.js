@@ -16,12 +16,12 @@ app.use(express.static("dist"));
 app.post("/export-csv", (req, res) => {
     try {
         const { stats } = req.body;
-        // Crear los encabezados del CSV
-        const csvHeader = "Equipo, Goles, Tiempos de Goles, Tiros, Tiempos de Tiros, Pases, Posesión\n";
-        const csvData = [
-            `Equipo Azul, ${stats.teamA.goals}, "${stats.teamA.goalsTimes}", ${stats.teamA.shots}, "${stats.teamA.shotsTimes}", ${stats.teamA.passes}, ${stats.teamA.possession}`,
-            `Equipo Rojo, ${stats.teamB.goals}, "${stats.teamB.goalsTimes}", ${stats.teamB.shots}, "${stats.teamB.shotsTimes}", ${stats.teamB.passes}, ${stats.teamB.possession}`
-        ].join("\n");
+         // Crear los encabezados del CSV
+         const csvHeader = "Equipo,Goles,Tiempos de Goles,Tiros,Tiempos de Tiros,Pases,Posesión,Jugadas Destacadas,Tiempo Total,Tiempo Pausado\n";
+         const csvData = [
+             `Equipo Azul,${stats.teamA.goals},"${stats.teamA.goalsTimes.replace(/,/g, ' / ')}",${stats.teamA.shots},"${stats.teamA.shotsTimes.replace(/,/g, ' / ')}",${stats.teamA.passes},${stats.teamA.possession},"${stats.highlights.replace(/,/g, ' / ')}",${stats.timeElapsed},${stats.timePaused}`,
+             `Equipo Rojo,${stats.teamB.goals},"${stats.teamB.goalsTimes.replace(/,/g, ' / ')}",${stats.teamB.shots},"${stats.teamB.shotsTimes.replace(/,/g, ' / ')}",${stats.teamB.passes},${stats.teamB.possession},"${stats.highlights.replace(/,/g, ' / ')}",${stats.timeElapsed},${stats.timePaused}`
+         ].join("\n");
 
         // Unir el encabezado con los datos
         const csvContent = csvHeader + csvData;

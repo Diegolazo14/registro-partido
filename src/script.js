@@ -1,18 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM completamente cargado y listo.");
 
-        // Agregar botón de jugada destacada
-        document.getElementById("highlight-play")?.addEventListener("click", () => {
-            stats.highlights.push(formatTime(timerSeconds)); // Guardar tiempo de la jugada destacada
-            updateStats();
-            console.log(`Jugada destacada registrada en ${formatTime(timerSeconds)}`);
-        });
-
     // Variables de estadísticas
     let stats = {
         teamA: { goals: 0, passes: 0, shots: 0, possession: 0, shotsTimes: [], goalsTimes: [] },
         teamB: { goals: 0, passes: 0, shots: 0, possession: 0, shotsTimes: [], goalsTimes: [] },
-        highlights: [] // 🔥 Nuevo array para almacenar las jugadas destacadas
+        highlights: [], // 🔥 Nuevo array para almacenar las jugadas destacadas
+        timeElapsed: 0,  // 🔥 Almacenar el tiempo total del partido
+        timePaused: 0  // 🔥 Almacenar el tiempo total pausado
     };
 
     // Variables para cronómetros
@@ -35,13 +30,21 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateMainTimers() {
         document.getElementById("main-timer").textContent = formatTime(timerSeconds);
         document.getElementById("paused-timer").textContent = formatTime(pausedSeconds);
-    }
+        stats.timeElapsed = timerSeconds;  // 🔥 Guardar el tiempo total en stats
+        stats.timePaused = pausedSeconds;  // 🔥 Guardar el tiempo pausado en stats
+    }  
 
     // Actualizar cronómetros de posesión
     function updatePossessionTimers() {
         document.getElementById("possession-timer-a").textContent = formatTime(possessionTimerA);
         document.getElementById("possession-timer-b").textContent = formatTime(possessionTimerB);
     }
+      // Agregar botón de jugada destacada
+      document.getElementById("highlight-play")?.addEventListener("click", () => {
+        stats.highlights.push(formatTime(timerSeconds)); // Guardar tiempo de la jugada destacada
+        updateStats();
+        console.log(`Jugada destacada registrada en ${formatTime(timerSeconds)}`);
+    });
 
     // Actualizar estadísticas
     function updateStats() {
@@ -223,7 +226,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 passes: stats.teamB.passes,
                 possession: stats.teamB.possession
             },
-            highlights: stats.highlights.join(" / ") // 🔥 Incluir jugadas destacadas
+            highlights: stats.highlights.join(" / "), // 🔥 Incluir jugadas destacadas
+            timeElapsed: formatTime(stats.timeElapsed),  // 🔥 Tiempo total transcurrido
+            timePaused: formatTime(stats.timePaused)  // 🔥 Tiempo total pausado
         };
             const response = await fetch(baseUrl, {
                 method: "POST",
