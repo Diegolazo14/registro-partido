@@ -1,10 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM completamente cargado y listo.");
 
+        // Agregar botón de jugada destacada
+        document.getElementById("highlight-play")?.addEventListener("click", () => {
+            stats.highlights.push(formatTime(timerSeconds)); // Guardar tiempo de la jugada destacada
+            updateStats();
+            console.log(`Jugada destacada registrada en ${formatTime(timerSeconds)}`);
+        });
+
     // Variables de estadísticas
     let stats = {
         teamA: { goals: 0, passes: 0, shots: 0, possession: 0, shotsTimes: [], goalsTimes: [] },
-        teamB: { goals: 0, passes: 0, shots: 0, possession: 0, shotsTimes: [], goalsTimes: [] }
+        teamB: { goals: 0, passes: 0, shots: 0, possession: 0, shotsTimes: [], goalsTimes: [] },
+        highlights: [] // 🔥 Nuevo array para almacenar las jugadas destacadas
     };
 
     // Variables para cronómetros
@@ -214,7 +222,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 shotsTimes: stats.teamB.shotsTimes.join(" / "),
                 passes: stats.teamB.passes,
                 possession: stats.teamB.possession
-            }
+            },
+            highlights: stats.highlights.join(" / ") // 🔥 Incluir jugadas destacadas
         };
             const response = await fetch(baseUrl, {
                 method: "POST",
